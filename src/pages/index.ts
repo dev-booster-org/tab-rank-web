@@ -1,3 +1,5 @@
 export * from './sign-in'
 export * from './home'
 export * from './lobby'
+export * from './not-found'
+export * from './sign-up'
