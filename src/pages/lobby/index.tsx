@@ -1,3 +1,3 @@
-export function Lobby(){
-  return <div>Lobby Page</div>;
+export function Lobby() {
+  return <div>Lobby Page</div>
 }

@@ -1,12 +1,12 @@
-import {  RouterProvider } from "react-router";
-import { ThemeProvider } from "../contexts/theme-provider";
+import { RouterProvider } from 'react-router'
 
-import { router } from "../routes/router";
+import { ThemeProvider } from '@modules/core/contexts/theme-provider'
+import { router } from '@modules/core/routes/router'
 
 export function App() {
   return (
     <ThemeProvider>
-     <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </ThemeProvider>
-  );
+  )
 }
