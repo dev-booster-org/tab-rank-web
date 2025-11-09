@@ -38,10 +38,6 @@ export function useCreateUser() {
             return
           }
 
-          console.log('---------- DEBUG ----------')
-          console.log(error.response)
-          console.log('---------- DEBUG ----------')
-
           toast.error(error.response?.data.message || 'Falha ao criar usuário.')
         }
       } finally {

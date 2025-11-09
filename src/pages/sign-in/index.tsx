@@ -20,7 +20,8 @@ import {
 } from '@/components'
 import { useCallback } from 'react'
 import { Crown } from 'lucide-react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import { useAuth } from '@/modules/auth/contexts/auth-provider'
 
 const formSchema = z.object({
   identifier: z.string().min(2).max(100),
@@ -30,13 +31,20 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>
 
 export function SignIn() {
+  const {
+    handlers: { handleSignIn },
+  } = useAuth()
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   })
+  const navigate = useNavigate()
 
-  const onSubmit = useCallback((data: FormSchema) => {
-    console.log(data)
-  }, [])
+  const onSubmit = useCallback(
+    (data: FormSchema) => {
+      handleSignIn({ params: data, onSuccess: () => navigate('/auth/home') })
+    },
+    [handleSignIn, navigate],
+  )
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen">
