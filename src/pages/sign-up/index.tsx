@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { Crown } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -21,6 +21,8 @@ import {
   FormMessage,
   Input,
 } from '@/components'
+import { useCreateUser } from '@/modules/user/hooks/use-create-user'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   nickName: z
@@ -45,10 +47,24 @@ export function SignUp() {
       password: '',
     },
   })
+  const {
+    loading,
+    handlers: { handleCreateUser },
+  } = useCreateUser()
+  const navigate = useNavigate()
 
-  const onSubmit = useCallback((data: FormSchema) => {
-    console.log(data)
-  }, [])
+  const onSubmit = useCallback(
+    (data: FormSchema) => {
+      handleCreateUser({
+        params: data,
+        onSuccess: () => {
+          navigate('/')
+          toast.success('Conta criada com sucesso!')
+        },
+      })
+    },
+    [handleCreateUser, navigate],
+  )
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen">
@@ -109,7 +125,7 @@ export function SignUp() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" disabled={loading}>
                 Criar
               </Button>
             </form>
