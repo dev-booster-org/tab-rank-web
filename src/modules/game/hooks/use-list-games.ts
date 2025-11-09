@@ -2,9 +2,13 @@ import { useCallback, useState } from 'react'
 import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
-import { createUserService } from '@modules/user/services/user-service'
+import { listGamesService } from '@modules/game/services/game-service'
 
-import type { CreateUserProps, CreateUserResponse } from '@modules/user/types'
+import type {
+  Game,
+  ListGamesProps,
+  ListGamesResponse,
+} from '@modules/game/types'
 
 type Handler<T, R> = {
   params: T
@@ -12,26 +16,27 @@ type Handler<T, R> = {
   onError?: (error: Error) => void
 }
 
-export function useCreateUser() {
+export function useListGames() {
   const [loading, setLoading] = useState(false)
+  const [games, setGames] = useState<Game[]>([])
 
-  const handleCreateUser = useCallback(
+  const handleListGames = useCallback(
     async ({
       params,
       onSuccess,
       onError,
-    }: Handler<CreateUserProps, CreateUserResponse>) => {
+    }: Handler<ListGamesProps, ListGamesResponse>) => {
       setLoading(true)
 
       try {
-        const { data } = await createUserService(params)
+        const { data } = await listGamesService(params)
 
         if (onSuccess) {
           onSuccess(data)
           return
         }
 
-        toast.success('Usuário criado com sucesso!')
+        setGames(data)
       } catch (error) {
         if (isAxiosError(error)) {
           if (onError) {
@@ -39,7 +44,7 @@ export function useCreateUser() {
             return
           }
 
-          toast.error(error.response?.data.message || 'Falha ao criar usuário.')
+          toast.error(error.response?.data.message || 'Falha ao listar jogos.')
         }
       } finally {
         setLoading(false)
@@ -50,8 +55,9 @@ export function useCreateUser() {
 
   return {
     loading,
+    games,
     handlers: {
-      handleCreateUser,
+      handleListGames,
     },
   }
 }

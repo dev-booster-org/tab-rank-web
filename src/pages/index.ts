@@ -1,3 +1,4 @@
+export * from './game'
 export * from './sign-in'
 export * from './home'
 export * from './lobby'

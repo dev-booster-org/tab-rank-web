@@ -1,4 +1,5 @@
-import { Crown, PlusCircle, Waypoints } from 'lucide-react'
+import { Crown, Gamepad, PlusCircle, Waypoints } from 'lucide-react'
+import { useNavigate } from 'react-router'
 
 import {
   Card,
@@ -15,10 +16,17 @@ import {
 } from '@/components'
 
 export function Home() {
+  const navigate = useNavigate()
+
   return (
-    <div className="flex flex-col p-4 gap-4 w-full">
+    <div className="flex flex-col gap-4 w-full">
       <section className="flex gap-4">
-        <Card className="flex-1 cursor-pointer">
+        <Card
+          className="flex-1 cursor-pointer"
+          onClick={() => {
+            navigate('/auth/lobby')
+          }}
+        >
           <CardHeader className="flex flex-col gap-4 items-center text-center">
             <PlusCircle className="h-6 w-6" />
             <CardTitle>Criar lobby</CardTitle>
@@ -31,10 +39,10 @@ export function Home() {
           </CardHeader>
         </Card>
       </section>
-      <Card className="cursor-pointer">
+      <Card className="cursor-pointer" onClick={() => navigate('/auth/game')}>
         <CardHeader className="flex items-center gap-2 justify-center">
-          <PlusCircle className="h-6 w-6" />
-          <CardTitle>Cadastrar Jogo</CardTitle>
+          <Gamepad className="h-6 w-6" />
+          <CardTitle>Jogos</CardTitle>
         </CardHeader>
       </Card>
       <Card>
