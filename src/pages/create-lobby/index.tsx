@@ -13,7 +13,6 @@ import {
   CardTitle,
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,7 +30,7 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>
 
-export function Lobby() {
+export function CreateLobby() {
   const {
     games,
     handlers: { handleListGames },
@@ -86,9 +85,6 @@ export function Lobby() {
                         </SelectContent>
                       </Select>
                     </FormControl>
-                    <FormDescription>
-                      Este será seu nome de usuário público.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

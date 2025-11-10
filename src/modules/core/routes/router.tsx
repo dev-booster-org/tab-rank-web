@@ -1,6 +1,15 @@
 import { createBrowserRouter } from 'react-router'
 
-import { Game, Home, Lobby, NotFound, SignIn, SignUp } from '@/pages'
+import {
+  Game,
+  Home,
+  CreateLobby,
+  NotFound,
+  SignIn,
+  SignUp,
+  JoinLobby,
+} from '@/pages'
+
 import { AuthLayout } from '@/layouts/auth-layout'
 
 export const router = createBrowserRouter([
@@ -26,8 +35,12 @@ export const router = createBrowserRouter([
         element: <Game />,
       },
       {
-        path: 'lobby',
-        element: <Lobby />,
+        path: 'create-lobby',
+        element: <CreateLobby />,
+      },
+      {
+        path: 'join-lobby',
+        element: <JoinLobby />,
       },
     ],
   },

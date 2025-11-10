@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
 } from 'react'
@@ -83,6 +84,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     },
     [],
   )
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('tabRank:accessToken')
+
+    if (!accessToken) return
+
+    setBearer({ accessToken })
+    setIsAuthenticated(true)
+  }, [])
 
   return (
     <AuthContext.Provider

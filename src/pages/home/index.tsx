@@ -1,6 +1,8 @@
 import { Crown, Gamepad, PlusCircle, Waypoints } from 'lucide-react'
 import { useNavigate } from 'react-router'
 
+import { useListGameRank } from '@/modules/game/hooks/use-list-game-rank'
+
 import {
   Card,
   CardContent,
@@ -14,25 +16,39 @@ import {
   TableHeader,
   TableRow,
 } from '@/components'
+import { useEffect } from 'react'
 
 export function Home() {
   const navigate = useNavigate()
+  const {
+    gameRank,
+    handlers: { handleListGameRank },
+  } = useListGameRank()
+
+  useEffect(() => {
+    handleListGameRank({ params: undefined })
+  }, [handleListGameRank])
 
   return (
     <div className="flex flex-col gap-4 w-full">
       <section className="flex gap-4">
         <Card
-          className="flex-1 cursor-pointer"
           onClick={() => {
-            navigate('/auth/lobby')
+            navigate('/auth/create-lobby')
           }}
+          className="flex-1 cursor-pointer"
         >
           <CardHeader className="flex flex-col gap-4 items-center text-center">
             <PlusCircle className="h-6 w-6" />
             <CardTitle>Criar lobby</CardTitle>
           </CardHeader>
         </Card>
-        <Card className="flex-1 cursor-pointer">
+        <Card
+          onClick={() => {
+            navigate('/auth/join-lobby')
+          }}
+          className="flex-1 cursor-pointer"
+        >
           <CardHeader className="flex flex-col gap-4 items-center text-center">
             <Waypoints className="h-6 w-6" />
             <CardTitle>Entrar em um lobby</CardTitle>
@@ -61,26 +77,15 @@ export function Home() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">Citadels</TableCell>
-                <TableCell>10troi</TableCell>
-                <TableCell>1</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">DixIt</TableCell>
-                <TableCell>fadinha</TableCell>
-                <TableCell>1</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Coup</TableCell>
-                <TableCell>bruno</TableCell>
-                <TableCell>5</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Uno</TableCell>
-                <TableCell>artimus</TableCell>
-                <TableCell>3</TableCell>
-              </TableRow>
+              {gameRank.map(({ id, name, winner }) => {
+                return (
+                  <TableRow key={id}>
+                    <TableCell className="font-medium">{name}</TableCell>
+                    <TableCell>{winner.nickName}</TableCell>
+                    <TableCell>{winner.victoriesCount}</TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </CardContent>
