@@ -1,6 +1,8 @@
 import { request } from '@/modules/core/services/request'
 
 import type {
+  CreateGameProps,
+  CreateGameResponse,
   ListGameRankResponse,
   ListGamesProps,
   ListGamesResponse,
@@ -18,5 +20,13 @@ export function listGameRankService() {
   return request<ListGameRankResponse[]>({
     url: '/game/list-game-rank',
     method: 'get',
+  })
+}
+
+export function createGameService(params: CreateGameProps) {
+  return request<CreateGameResponse>({
+    url: '/game/create',
+    method: 'post',
+    body: params,
   })
 }

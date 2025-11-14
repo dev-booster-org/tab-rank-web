@@ -1,3 +1,4 @@
+export * from './create-game.interface'
 export * from './game-types.enum'
 export * from './game.interface'
 export * from './list-game-rank.interface'
