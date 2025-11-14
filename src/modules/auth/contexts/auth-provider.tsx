@@ -28,8 +28,6 @@ interface AuthProviderProps {
 
 interface AuthContextSchema {
   loading: boolean
-  user: SignInResponse['user'] | null
-  isAuthenticated: boolean
   handlers: {
     handleSignIn: (props: Handler<SignInProps, SignInResponse>) => void
   }
@@ -37,8 +35,6 @@ interface AuthContextSchema {
 
 const AuthContext = createContext<AuthContextSchema>({
   loading: false,
-  user: null,
-  isAuthenticated: false,
   handlers: {
     handleSignIn: () => {},
   },
@@ -46,8 +42,6 @@ const AuthContext = createContext<AuthContextSchema>({
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState<SignInResponse['user'] | null>(null)
 
   const handleSignIn = useCallback(
     async ({
@@ -61,9 +55,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const { data } = await signInService(params)
 
         localStorage.setItem('tabRank:accessToken', data.accessToken)
+        localStorage.setItem('tabRank:user', JSON.stringify(data.user))
 
-        setIsAuthenticated(true)
-        setUser(data.user)
         setBearer({ accessToken: data.accessToken })
 
         if (onSuccess) onSuccess(data)
@@ -87,19 +80,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     const accessToken = localStorage.getItem('tabRank:accessToken')
+    const user = localStorage.getItem('tabRank:user')
 
-    if (!accessToken) return
+    if (!accessToken || !user) return
 
     setBearer({ accessToken })
-    setIsAuthenticated(true)
   }, [])
 
   return (
     <AuthContext.Provider
       value={{
         loading,
-        user,
-        isAuthenticated,
         handlers: {
           handleSignIn,
         },
