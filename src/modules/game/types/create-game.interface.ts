@@ -6,7 +6,7 @@ export interface CreateGameProps {
   type: GameTypes[]
   maxPlayers: number
   minPlayers: number
-  coverImageUrl: string
+  coverImageUrl?: string
 }
 
 export type CreateGameResponse = Game

@@ -1,3 +1,7 @@
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
+import { Eye, PlusCircle } from 'lucide-react'
+
 import {
   Button,
   Card,
@@ -10,11 +14,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components'
+
 import { useListGames } from '@/modules/game/hooks/use-list-games'
-import { Eye, PlusCircle } from 'lucide-react'
-import { useEffect } from 'react'
+import { gameTypeTranslations } from '@/modules/game/utils/game-type-translations'
 
 export function Game() {
+  const navigate = useNavigate()
   const {
     games,
     handlers: { handleListGames },
@@ -26,7 +31,13 @@ export function Game() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Button variant="outline" className="w-full">
+      <Button
+        onClick={() => {
+          navigate('/auth/create-game')
+        }}
+        variant="outline"
+        className="w-full"
+      >
         <PlusCircle />
         Cadastrar Jogo
       </Button>
@@ -48,7 +59,7 @@ export function Game() {
                 return (
                   <TableRow key={id}>
                     <TableCell className="font-medium">{name}</TableCell>
-                    <TableCell>{type}</TableCell>
+                    <TableCell>{gameTypeTranslations[type[0]]}</TableCell>
                     <TableCell>{minPlayers}</TableCell>
                     <TableCell>{maxPlayers}</TableCell>
                     <TableCell>

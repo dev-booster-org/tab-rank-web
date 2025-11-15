@@ -8,6 +8,7 @@ import {
   SignIn,
   SignUp,
   JoinLobby,
+  CreateGame,
 } from '@/pages'
 
 import { AuthLayout } from '@/layouts/auth-layout'
@@ -24,11 +25,7 @@ export const router = createBrowserRouter([
       if (accessToken && user) {
         setBearer({ accessToken })
 
-        redirect('/auth/home')
-
-        return {
-          user: JSON.parse(localStorage.getItem('tabRank:user') || '{}'),
-        }
+        return redirect('/auth/home')
       }
 
       return null
@@ -47,15 +44,12 @@ export const router = createBrowserRouter([
       const user = localStorage.getItem('tabRank:user')
 
       if (!accessToken || !user) {
-        redirect('/')
-        return null
+        return redirect('/')
       }
 
       setBearer({ accessToken })
 
-      return {
-        user: JSON.parse(localStorage.getItem('tabRank:user') || '{}'),
-      }
+      return null
     },
     children: [
       {
@@ -73,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: 'join-lobby',
         element: <JoinLobby />,
+      },
+      {
+        path: 'create-game',
+        element: <CreateGame />,
       },
     ],
   },

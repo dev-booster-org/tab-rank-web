@@ -2,9 +2,9 @@ import { useCallback, useState } from 'react'
 import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
-import { listGameRankService } from '@modules/game/services/game-service'
+import { createGameService } from '@modules/game/services/game-service'
 
-import type { ListGameRankResponse } from '@modules/game/types'
+import type { CreateGameProps, CreateGameResponse } from '@modules/game/types'
 
 type Handler<T, R> = {
   params: T
@@ -14,24 +14,24 @@ type Handler<T, R> = {
 
 export function useCreateGame() {
   const [loading, setLoading] = useState(false)
-  const [gameRank, setGameRank] = useState<ListGameRankResponse[]>([])
 
-  const handleListGameRank = useCallback(
+  const handleCreateGame = useCallback(
     async ({
+      params,
       onSuccess,
       onError,
-    }: Handler<undefined, ListGameRankResponse[]>) => {
+    }: Handler<CreateGameProps, CreateGameResponse>) => {
       setLoading(true)
 
       try {
-        const { data } = await listGameRankService()
+        const { data } = await createGameService(params)
 
         if (onSuccess) {
           onSuccess(data)
           return
         }
 
-        setGameRank(data)
+        toast.success('Jogo criado com sucesso!')
       } catch (error) {
         if (isAxiosError(error)) {
           if (onError) {
@@ -39,7 +39,7 @@ export function useCreateGame() {
             return
           }
 
-          toast.error(error.response?.data.message || 'Falha ao listar jogos.')
+          toast.error(error.response?.data.message || 'Falha ao criar jogo.')
         }
       } finally {
         setLoading(false)
@@ -50,9 +50,8 @@ export function useCreateGame() {
 
   return {
     loading,
-    gameRank,
     handlers: {
-      handleListGameRank,
+      handleCreateGame,
     },
   }
 }

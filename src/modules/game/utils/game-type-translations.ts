@@ -1,0 +1,18 @@
+export const gameTypeTranslations = {
+  strategy: 'Estratégia',
+  card: 'Cartas',
+  dice: 'Dados',
+  party: 'Festa',
+  family: 'Família',
+  trivia: 'Trivia',
+  cooperative: 'Cooperativo',
+  competitive: 'Competitivo',
+  abstract: 'Abstrato',
+  puzzle: 'Quebra-cabeça',
+  adventure: 'Aventura',
+  rpg: 'RPG',
+  economy: 'Economia',
+  wargame: 'Wargame',
+  dexterity: 'Destreza',
+  social_deduction: 'Dedução Social',
+}

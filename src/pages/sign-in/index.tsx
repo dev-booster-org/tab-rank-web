@@ -48,7 +48,7 @@ export function SignIn() {
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen">
-      <Card className="w-4/5">
+      <Card className="w-4/5 lg:w-3/12">
         <CardHeader className="flex flex-col gap-4 items-center">
           <div className="flex items-center gap-1 mx-auto">
             <Crown />
