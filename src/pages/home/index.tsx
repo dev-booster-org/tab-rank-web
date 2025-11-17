@@ -1,4 +1,5 @@
-import { Crown, Gamepad, PlusCircle, Waypoints } from 'lucide-react'
+import { useEffect } from 'react'
+import { Crown, Gamepad, PlusCircle, LogIn } from 'lucide-react'
 import { useNavigate } from 'react-router'
 
 import { useListGameRank } from '@/modules/game/hooks/use-list-game-rank'
@@ -16,7 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components'
-import { useEffect } from 'react'
 
 export function Home() {
   const navigate = useNavigate()
@@ -30,7 +30,7 @@ export function Home() {
   }, [handleListGameRank])
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-4 w-full lg:w-3/12 lg:mx-auto">
       <section className="flex gap-4">
         <Card
           onClick={() => {
@@ -50,7 +50,7 @@ export function Home() {
           className="flex-1 cursor-pointer"
         >
           <CardHeader className="flex flex-col gap-4 items-center text-center">
-            <Waypoints className="h-6 w-6" />
+            <LogIn className="h-6 w-6" />
             <CardTitle>Entrar em um lobby</CardTitle>
           </CardHeader>
         </Card>

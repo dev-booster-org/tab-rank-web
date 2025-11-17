@@ -9,6 +9,7 @@ import {
   SignUp,
   JoinLobby,
   CreateGame,
+  Lobby,
 } from '@/pages'
 
 import { AuthLayout } from '@/layouts/auth-layout'
@@ -67,6 +68,10 @@ export const router = createBrowserRouter([
       {
         path: 'join-lobby',
         element: <JoinLobby />,
+      },
+      {
+        path: 'lobby/:lobbyId',
+        element: <Lobby />,
       },
       {
         path: 'create-game',

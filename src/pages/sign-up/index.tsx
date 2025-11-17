@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { Crown } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
+
+import { useCreateUser } from '@/modules/user/hooks/use-create-user'
 
 import {
   Button,
@@ -21,15 +24,18 @@ import {
   FormMessage,
   Input,
 } from '@/components'
-import { useCreateUser } from '@/modules/user/hooks/use-create-user'
-import { toast } from 'sonner'
 
 const formSchema = z.object({
   nickName: z
     .string()
+    .refine((value) => /^[a-z0-9_]+$/.test(value), {
+      message: 'Não pode conter caracteres especiais ou letras maiúsculas.',
+    })
     .min(4, { message: 'Nickname deve ter pelo menos 4 caracteres.' })
     .max(20, { message: 'Nickname deve ter no máximo 20 caracteres.' }),
-  email: z.email({ message: 'Email inválido.' }),
+
+  email: z.string().email({ message: 'Email inválido.' }),
+
   password: z
     .string()
     .min(8, { message: 'Senha deve ter pelo menos 8 caracteres.' })
@@ -68,7 +74,7 @@ export function SignUp() {
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen">
-      <Card className="w-4/5">
+      <Card className="w-4/5 lg:w-3/12">
         <CardHeader className="flex flex-col gap-4 items-center">
           <div className="flex items-center gap-1 mx-auto">
             <Crown />

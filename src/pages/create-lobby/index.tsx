@@ -2,8 +2,11 @@ import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from 'react-router'
+import { toast } from 'sonner'
 
 import { useListGames } from '@modules/game/hooks/use-list-games'
+import { useCreateLobby } from '@/modules/lobby/hooks/use-create-lobby'
 
 import {
   Button,
@@ -31,10 +34,14 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>
 
 export function CreateLobby() {
+  const navigate = useNavigate()
   const {
     games,
     handlers: { handleListGames },
   } = useListGames()
+  const {
+    handlers: { handleCreateLobby },
+  } = useCreateLobby()
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -43,9 +50,18 @@ export function CreateLobby() {
     },
   })
 
-  const onSubmit = useCallback((data: FormSchema) => {
-    console.log(data)
-  }, [])
+  const onSubmit = useCallback(
+    ({ gameId }: FormSchema) => {
+      handleCreateLobby({
+        params: { gameId },
+        onSuccess: ({ id }) => {
+          navigate(`/auth/lobby/${id}`)
+          toast.success('Lobby criado com sucesso!')
+        },
+      })
+    },
+    [handleCreateLobby, navigate],
+  )
 
   useEffect(() => {
     handleListGames({ params: {} })
