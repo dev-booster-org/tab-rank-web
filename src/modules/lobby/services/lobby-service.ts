@@ -5,6 +5,8 @@ import type {
   CreateLobbyResponse,
   GetLobbyByIdProps,
   GetLobbyByIdResponse,
+  JoinLobbyProps,
+  JoinLobbyResponse,
 } from '@modules/lobby/types'
 
 export function createLobbyService(params: CreateLobbyProps) {
@@ -19,5 +21,13 @@ export function getLobbyByIdService({ id }: GetLobbyByIdProps) {
   return request<GetLobbyByIdResponse>({
     url: `/lobby/${id}`,
     method: 'get',
+  })
+}
+
+export function joinLobbyService({ joinCode }: JoinLobbyProps) {
+  return request<JoinLobbyResponse>({
+    url: `/lobby/join`,
+    method: 'post',
+    body: { joinCode },
   })
 }

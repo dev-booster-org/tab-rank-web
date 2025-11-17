@@ -28,7 +28,7 @@ export function AuthLayout() {
 
           <Avatar>
             <AvatarImage
-              src="https://github.com/maxleiter.png"
+              src="https://github.com/jhonesjhonatas.png"
               alt="@maxleiter"
             />
             <AvatarFallback>LR</AvatarFallback>

@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
+import { useNavigate } from 'react-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -18,16 +19,20 @@ import {
   Input,
 } from '@/components'
 
+import { useJoinLobby } from '@/modules/lobby/hooks/use-join-lobby'
+import { toast } from 'sonner'
+
 const formSchema = z.object({
   joinCode: z
     .string({ message: 'Digite o código de entrada' })
-    .min(7, { message: 'O código de entrada deve ter 7 caracteres' })
-    .max(7, { message: 'O código de entrada deve ter 7 caracteres' }),
+    .min(6, { message: 'O código de entrada deve ter 6 caracteres' })
+    .max(6, { message: 'O código de entrada deve ter 6 caracteres' }),
 })
 
 type FormSchema = z.infer<typeof formSchema>
 
 export function JoinLobby() {
+  const navigate = useNavigate()
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,9 +40,27 @@ export function JoinLobby() {
     },
   })
 
-  const onSubmit = useCallback((data: FormSchema) => {
-    console.log(data)
-  }, [])
+  const {
+    handlers: { handleJoinLobby },
+  } = useJoinLobby()
+
+  const onSubmit = useCallback(
+    (data: FormSchema) => {
+      handleJoinLobby({
+        params: {
+          joinCode: data.joinCode,
+        },
+        onSuccess: (data) => {
+          navigate(`/auth/lobby/${data.id}`)
+          toast.success('Agora você faz parte do lobby!')
+        },
+        onError: () => {
+          toast.error('Código inválido. Não foi possível entrar no lobby.')
+        },
+      })
+    },
+    [handleJoinLobby, navigate],
+  )
 
   return (
     <div>
