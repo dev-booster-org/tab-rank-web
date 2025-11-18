@@ -1,7 +1,7 @@
-import type { LobbyInterface } from './lobby.interface'
+import type { Lobby } from './lobby.interface'
 
 export interface CreateLobbyProps {
   gameId: string
 }
 
-export type CreateLobbyResponse = LobbyInterface
+export type CreateLobbyResponse = Lobby

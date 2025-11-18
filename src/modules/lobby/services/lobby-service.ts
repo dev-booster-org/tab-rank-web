@@ -7,6 +7,9 @@ import type {
   GetLobbyByIdResponse,
   JoinLobbyProps,
   JoinLobbyResponse,
+  GetActiveLobbyResponse,
+  LeaveLobbyResponse,
+  LeaveLobbyProps,
 } from '@modules/lobby/types'
 
 export function createLobbyService(params: CreateLobbyProps) {
@@ -29,5 +32,20 @@ export function joinLobbyService({ joinCode }: JoinLobbyProps) {
     url: `/lobby/join`,
     method: 'post',
     body: { joinCode },
+  })
+}
+
+export function getActiveLobbyService() {
+  return request<GetActiveLobbyResponse>({
+    url: `/lobby/active`,
+    method: 'get',
+  })
+}
+
+export function leaveLobbyService(props: LeaveLobbyProps) {
+  return request<LeaveLobbyResponse>({
+    url: `/lobby/leave`,
+    method: 'post',
+    body: props,
   })
 }

@@ -1,25 +1,40 @@
 import { useEffect, useMemo } from 'react'
-import { useParams } from 'react-router'
-import { GamepadDirectional, RouteOff } from 'lucide-react'
+import { useNavigate, useParams } from 'react-router'
+import { Crown, GamepadDirectional, RouteOff } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { useGetLobbyById } from '@/modules/lobby/hooks/use-get-lobby-by-id'
+import { useLeaveLobby } from '@/modules/lobby/hooks/use-leave-lobby'
 
 import { PlayerItem } from './components/player-item'
+import { CreateMatchDialog } from './components/create-match-dialog'
 
 import {
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
+  Dialog,
+  DialogTrigger,
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
 } from '@/components'
 
 export function Lobby() {
+  const navigate = useNavigate()
   const { lobbyId } = useParams<{ lobbyId: string }>()
   const {
     lobby,
     handlers: { handleGetLobbyById },
   } = useGetLobbyById()
+  const {
+    handlers: { handleLeaveLobby },
+  } = useLeaveLobby()
 
   const avaliableSpots = useMemo(() => {
     if (!lobby) return 0
@@ -52,16 +67,32 @@ export function Lobby() {
         </CardHeader>
       </Card>
       <div className="w-full flex gap-4">
-        <Card className="flex-1">
-          <CardHeader className="flex flex-col gap-4 items-center text-center">
-            <GamepadDirectional className="h-6 w-6" />
-            <CardTitle>Iniciar Partida</CardTitle>
-          </CardHeader>
-        </Card>
-        <Card className="flex-1">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Card className="flex-1" onClick={() => {}}>
+              <CardHeader className="flex flex-col gap-4 items-center text-center">
+                <GamepadDirectional className="h-6 w-6" />
+                <CardTitle>Registrar Partida</CardTitle>
+              </CardHeader>
+            </Card>
+          </DialogTrigger>
+          {lobby && <CreateMatchDialog lobby={lobby} />}
+        </Dialog>
+        <Card
+          className="flex-1"
+          onClick={() => {
+            handleLeaveLobby({
+              params: { lobbyId: lobbyId! },
+              onSuccess: () => {
+                toast.success('Você saiu do lobby com sucesso!')
+                navigate('/auth/home')
+              },
+            })
+          }}
+        >
           <CardHeader className="flex flex-col gap-4 items-center text-center">
             <RouteOff className="h-6 w-6" />
-            <CardTitle>Fechar Lobby</CardTitle>
+            <CardTitle>Deixar Lobby</CardTitle>
           </CardHeader>
         </Card>
       </div>
@@ -95,6 +126,42 @@ export function Lobby() {
           })}
         </CardContent>
       </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Histórico de Partidas</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-2">
+          {lobby?.matches.map((match) => {
+            return (
+              <Item key={match.id} variant="muted">
+                <ItemContent>
+                  <ItemTitle>
+                    <Crown className="w-4 h-4" />
+                    <span className="font-bold">{match.winner.nickName}</span>
+                  </ItemTitle>
+                  <ItemDescription>{match.duration} minutos</ItemDescription>
+                </ItemContent>
+                <ItemActions>
+                  <Button variant="outline" size="sm" disabled>
+                    {checkIfThisUserIsWinner(match.winner.id)
+                      ? 'Você venceu! 😎'
+                      : 'Você perdeu! 😩'}
+                  </Button>
+                </ItemActions>
+              </Item>
+            )
+          })}
+        </CardContent>
+      </Card>
     </div>
   )
+}
+
+function checkIfThisUserIsWinner(winnerId: string) {
+  const userData = localStorage.getItem('tabRank:user')
+  if (!userData) return false
+
+  const { id: userId } = JSON.parse(userData)
+
+  return winnerId === userId
 }

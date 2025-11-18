@@ -54,9 +54,6 @@ export function JoinLobby() {
           navigate(`/auth/lobby/${data.id}`)
           toast.success('Agora você faz parte do lobby!')
         },
-        onError: () => {
-          toast.error('Código inválido. Não foi possível entrar no lobby.')
-        },
       })
     },
     [handleJoinLobby, navigate],
