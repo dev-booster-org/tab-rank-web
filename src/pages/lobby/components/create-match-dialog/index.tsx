@@ -107,7 +107,7 @@ export function CreateMatchDialog({ lobby }: CreateMatchDialogProps) {
             name="winnerId"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Tipo</FormLabel>
+                <FormLabel>Vencedor</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full">

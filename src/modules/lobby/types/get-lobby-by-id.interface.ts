@@ -7,7 +7,7 @@ export interface GetLobbyByIdProps {
   id: string
 }
 
-interface MatchWithRelations extends Match {
+export interface MatchWithRelations extends Match {
   players: User[]
   winner: User
 }
