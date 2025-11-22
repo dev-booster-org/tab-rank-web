@@ -9,6 +9,7 @@ import type { Game } from '@/modules/game/types'
 
 import {
   Button,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -29,6 +30,7 @@ import {
 } from '@/components'
 import { useCreateMatch } from '@/modules/match/hooks/use-create-match'
 import { toast } from 'sonner'
+import { X } from 'lucide-react'
 
 const formSchema = z.object({
   duration: z.string().min(1, 'Duração é obrigatória'),
@@ -91,9 +93,16 @@ export function CreateMatchDialog({
   )
 
   return (
-    <DialogContent>
+    <DialogContent showCloseButton={false}>
       <DialogHeader>
-        <DialogTitle>Registrar Partida</DialogTitle>
+        <div className="flex items-center justify-between w-full">
+          <DialogTitle>Registrar Partida</DialogTitle>
+          <DialogClose>
+            <Button variant="ghost" size="icon" onClick={handleCloseModal}>
+              <X />
+            </Button>
+          </DialogClose>
+        </div>
       </DialogHeader>
       <DialogDescription>
         Esté uma ação temporária, a forma como as partidas são registradas irão

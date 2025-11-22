@@ -75,7 +75,7 @@ export function JoinLobby() {
                   <FormItem>
                     <FormLabel>Código de Entrada</FormLabel>
                     <FormControl>
-                      <Input type="text" placeholder="ABC-123" {...field} />
+                      <Input type="text" placeholder="ABC123" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

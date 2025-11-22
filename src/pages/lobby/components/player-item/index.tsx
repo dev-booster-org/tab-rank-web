@@ -1,7 +1,9 @@
-import { AvatarFallback } from '@radix-ui/react-avatar'
+import { useMemo } from 'react'
+import { CircleOff } from 'lucide-react'
 
 import {
   Avatar,
+  AvatarFallback,
   AvatarImage,
   Button,
   Item,
@@ -9,7 +11,6 @@ import {
   ItemDescription,
   ItemTitle,
 } from '@/components'
-import { CircleOff } from 'lucide-react'
 
 interface PlayerItemProps {
   nickName: string
@@ -22,17 +23,18 @@ export function PlayerItem({
   description,
   showKickButton,
 }: PlayerItemProps) {
+  const acronym = useMemo(() => {
+    return nickName.slice(0, 2).toUpperCase()
+  }, [nickName])
+
   return (
     <Item variant="outline">
       <ItemContent>
         <div className="flex justify-between">
           <div className="flex gap-2">
             <Avatar className="w-9 h-9">
-              <AvatarImage
-                src="https://github.com/jhonesjhonatas.png"
-                alt="@maxleiter"
-              />
-              <AvatarFallback>LR</AvatarFallback>
+              <AvatarImage src={''} alt={nickName || 'User'} />
+              <AvatarFallback>{acronym}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <ItemTitle>{nickName}</ItemTitle>

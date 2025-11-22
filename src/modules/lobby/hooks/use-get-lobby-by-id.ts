@@ -58,6 +58,16 @@ export function useGetLobbyById() {
   )
 
   useEffect(() => {
+    if (!lobby) return
+
+    socket.emit('room:join', lobby.id)
+
+    return () => {
+      socket.emit('room:leave', lobby.id)
+    }
+  }, [lobby, socket])
+
+  useEffect(() => {
     const handleJoinedPlayer = (data: unknown) => {
       setLobby((prev) => {
         if (!prev) return prev
