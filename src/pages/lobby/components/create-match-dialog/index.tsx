@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from '@/components'
 import { useCreateMatch } from '@/modules/match/hooks/use-create-match'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   duration: z.string().min(1, 'Duração é obrigatória'),
@@ -44,9 +45,13 @@ interface LobbyWithRelations extends Lobby {
 
 interface CreateMatchDialogProps {
   lobby: LobbyWithRelations
+  handleCloseModal: () => void
 }
 
-export function CreateMatchDialog({ lobby }: CreateMatchDialogProps) {
+export function CreateMatchDialog({
+  lobby,
+  handleCloseModal,
+}: CreateMatchDialogProps) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {},
@@ -69,9 +74,20 @@ export function CreateMatchDialog({ lobby }: CreateMatchDialogProps) {
             ...lobby.players.map((player) => player.id),
           ],
         },
+        onSuccess: () => {
+          handleCloseModal()
+          toast.success('Partida registrada com sucesso')
+        },
       })
     },
-    [handleCreateMatch, lobby.game.id, lobby.host.id, lobby.id, lobby.players],
+    [
+      handleCloseModal,
+      handleCreateMatch,
+      lobby.game.id,
+      lobby.host.id,
+      lobby.id,
+      lobby.players,
+    ],
   )
 
   return (

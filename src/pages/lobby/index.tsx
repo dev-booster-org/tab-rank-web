@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { Crown, GamepadDirectional, RouteOff } from 'lucide-react'
 import { toast } from 'sonner'
@@ -36,6 +36,8 @@ export function Lobby() {
     handlers: { handleLeaveLobby },
   } = useLeaveLobby()
 
+  const [createMatchModalIsOpen, setCreateMatchModalIsOpen] = useState(false)
+
   const avaliableSpots = useMemo(() => {
     if (!lobby) return 0
 
@@ -67,16 +69,26 @@ export function Lobby() {
         </CardHeader>
       </Card>
       <div className="w-full flex gap-4">
-        <Dialog>
+        <Dialog open={createMatchModalIsOpen}>
           <DialogTrigger asChild>
-            <Card className="flex-1" onClick={() => {}}>
+            <Card
+              className="flex-1"
+              onClick={() => {
+                setCreateMatchModalIsOpen(true)
+              }}
+            >
               <CardHeader className="flex flex-col gap-4 items-center text-center">
                 <GamepadDirectional className="h-6 w-6" />
                 <CardTitle>Registrar Partida</CardTitle>
               </CardHeader>
             </Card>
           </DialogTrigger>
-          {lobby && <CreateMatchDialog lobby={lobby} />}
+          {lobby && (
+            <CreateMatchDialog
+              lobby={lobby}
+              handleCloseModal={() => setCreateMatchModalIsOpen(false)}
+            />
+          )}
         </Dialog>
         <Card
           className="flex-1"
