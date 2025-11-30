@@ -10,6 +10,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  Skeleton,
   Table,
   TableBody,
   TableCaption,
@@ -24,6 +25,7 @@ export function Home() {
   const navigate = useNavigate()
   const {
     gameRank,
+    loading: gameRankLoading,
     handlers: { handleListGameRank },
   } = useListGameRank()
   const {
@@ -104,17 +106,35 @@ export function Home() {
                 <TableHead>Vitórias</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {gameRank.map(({ id, name, winner }) => {
-                return (
-                  <TableRow key={id}>
-                    <TableCell className="font-medium">{name}</TableCell>
-                    <TableCell>{winner.nickName}</TableCell>
-                    <TableCell>{winner.victoriesCount}</TableCell>
+            {gameRankLoading ? (
+              <TableBody>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
                   </TableRow>
-                )
-              })}
-            </TableBody>
+                ))}
+              </TableBody>
+            ) : (
+              <TableBody>
+                {gameRank.map(({ id, name, winner }) => {
+                  return (
+                    <TableRow key={id}>
+                      <TableCell className="font-medium">{name}</TableCell>
+                      <TableCell>{winner.nickName}</TableCell>
+                      <TableCell>{winner.victoriesCount}</TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            )}
           </Table>
         </CardContent>
       </Card>

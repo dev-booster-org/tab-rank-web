@@ -10,6 +10,7 @@ import {
   JoinLobby,
   CreateGame,
   Lobby,
+  Profile,
 } from '@/pages'
 
 import { AuthLayout } from '@/layouts/auth-layout'
@@ -76,6 +77,10 @@ export const router = createBrowserRouter([
       {
         path: 'create-game',
         element: <CreateGame />,
+      },
+      {
+        path: 'profile/:userId',
+        element: <Profile />,
       },
     ],
   },
