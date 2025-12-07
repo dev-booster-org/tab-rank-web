@@ -1,73 +1,110 @@
-# React + TypeScript + Vite
+# Tab Rank Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A real-time gaming ranking platform where players can create games, join lobbies, and track their match results with an integrated ranking system.
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Tab Rank Web is a modern web application built with React and TypeScript that allows users to manage gaming sessions. Players can create custom games, join lobbies with friends, register match results, and view rankings in real-time using WebSocket connections.
 
-## React Compiler
+## Screenshots
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+> Add your application screenshots here
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **Radix UI** - Component primitives
+- **React Router** - Navigation
+- **Socket.io** - Real-time communication
+- **React Hook Form + Zod** - Form handling and validation
+- **Axios** - HTTP client
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Project Structure
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── assets/              # Static assets
+├── components/          # Reusable UI components
+│   └── ui/             # Shadcn UI components
+├── layouts/            # Layout components
+│   └── auth-layout/    # Authentication layout
+├── lib/                # Utility functions
+├── modules/            # Feature modules
+│   ├── auth/          # Authentication module
+│   ├── core/          # Core functionality (API, routes, theme)
+│   ├── game/          # Game management
+│   ├── lobby/         # Lobby management
+│   ├── match/         # Match tracking
+│   └── user/          # User management
+└── pages/              # Application pages
+    ├── create-game/   # Game creation page
+    ├── create-lobby/  # Lobby creation page
+    ├── game/          # Game details and ranking
+    ├── home/          # Home page
+    ├── join-lobby/    # Join lobby page
+    ├── lobby/         # Lobby room
+    ├── profile/       # User profile
+    ├── sign-in/       # Sign in page
+    ├── sign-up/       # Sign up page
+    └── not-found/     # 404 page
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## How to Setup
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js 24.11.1
+- npm or pnpm
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd web-tab-rank
 ```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Configure environment variables:
+```bash
+cp .env.example .env
+```
+
+Edit the `.env` file with your API URL:
+```
+VITE_API_URL=http://localhost:3333/api
+```
+
+### Running the Application
+
+Development mode:
+```bash
+npm run dev
+```
+
+Build for production:
+```bash
+npm run build
+```
+
+Preview production build:
+```bash
+npm run preview
+```
+
+Lint:
+```bash
+npm run lint
+```
+
+## Author
+
+**Jhones Jhonatas**
+Email: jhonesjhonatas@outlook.com.br
