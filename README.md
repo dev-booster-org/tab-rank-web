@@ -8,7 +8,13 @@ Tab Rank Web is a modern web application built with React and TypeScript that al
 
 ## Screenshots
 
-> Add your application screenshots here
+<div style="display: flex; gap: 10px;">
+  <img src="https://github.com/user-attachments/assets/e219e64f-23aa-4a2a-972d-4677a3024386" width="150" />
+  <img src="https://github.com/user-attachments/assets/65d9ab33-086c-400f-8868-7189029428c2" width="150" />
+  <img src="https://github.com/user-attachments/assets/fd4c7623-d2c9-488e-9029-4b00eab35b17" width="150" />
+  <img src="https://github.com/user-attachments/assets/6ad413c7-dba8-431a-be32-0f7e9811d9d9" width="150" />
+</div>
+
 
 ## Tech Stack
 
