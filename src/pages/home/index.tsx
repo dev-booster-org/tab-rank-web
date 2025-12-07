@@ -94,7 +94,7 @@ export function Home() {
       <Card>
         <CardHeader className="flex items-center gap-2 justify-center">
           <Crown className="h-6 w-6" />
-          <CardTitle>Ranking de vitórias</CardTitle>
+          <CardTitle>Ranking global</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>

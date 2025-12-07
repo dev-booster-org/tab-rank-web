@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { Eye, PlusCircle } from 'lucide-react'
+import { Eye, Pen, PlusCircle } from 'lucide-react'
 
 import {
   Button,
@@ -44,7 +44,7 @@ export function Game() {
       <Card>
         <CardContent>
           <Table>
-            <TableCaption>Ranking de Vencedores por jogo.</TableCaption>
+            <TableCaption>Jogos disponíveis</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">Nome</TableHead>
@@ -62,9 +62,12 @@ export function Game() {
                     <TableCell>{gameTypeTranslations[type[0]]}</TableCell>
                     <TableCell>{minPlayers}</TableCell>
                     <TableCell>{maxPlayers}</TableCell>
-                    <TableCell>
+                    <TableCell className="flex items-center gap-2">
                       <Button size="icon">
                         <Eye />
+                      </Button>
+                      <Button size="icon">
+                        <Pen />
                       </Button>
                     </TableCell>
                   </TableRow>

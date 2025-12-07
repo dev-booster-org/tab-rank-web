@@ -25,6 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components'
+import { useListGameRankByUser } from '@/modules/game/hooks/use-list-game-rank-by-user'
 
 export function Profile() {
   const { userId } = useParams()
@@ -37,6 +38,11 @@ export function Profile() {
     loading: matchesLoading,
     handlers: { handleGetMatchesByUserId },
   } = useGetMatchesByUserId()
+  const {
+    loading: gameRankLoading,
+    gameRank,
+    handlers: { handleListGameRankByUser },
+  } = useListGameRankByUser()
 
   const acronym = useMemo(() => {
     if (!user?.nickName) return 'U'
@@ -46,9 +52,15 @@ export function Profile() {
   useEffect(() => {
     if (userId) {
       handleGetUserById({ params: { id: userId } })
-      handleGetMatchesByUserId({ params: { userId } })
+      handleGetMatchesByUserId({ params: { userId, limit: 5 } })
+      handleListGameRankByUser({ params: { userId } })
     }
-  }, [userId, handleGetUserById, handleGetMatchesByUserId])
+  }, [
+    userId,
+    handleGetUserById,
+    handleGetMatchesByUserId,
+    handleListGameRankByUser,
+  ])
 
   return (
     <div className="p-4 flex flex-col gap-4">
@@ -66,19 +78,63 @@ export function Profile() {
       </section>
       <Card>
         <CardHeader>
-          <CardTitle>Ranking</CardTitle>
+          <CardTitle>Seu Ranking</CardTitle>
         </CardHeader>
         <CardContent>
-          <span>Vem aí...</span>
+          <Table>
+            <TableCaption>Seu ranking.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">Jogo</TableHead>
+                <TableHead>Vit</TableHead>
+                <TableHead>Part</TableHead>
+              </TableRow>
+            </TableHeader>
+            {gameRankLoading ? (
+              <TableBody>
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            ) : (
+              <TableBody>
+                {gameRank.map((rank) => {
+                  return (
+                    <TableRow key={rank.game.id}>
+                      <TableCell className="font-medium">
+                        {rank.game.name}
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {rank.victoriesCount}
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {rank.matchesCount}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            )}
+          </Table>
         </CardContent>
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Histórico de Partidas</CardTitle>
+          <CardTitle>Partidas recentes</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
-            <TableCaption>Histórico de partidas.</TableCaption>
+            <TableCaption>Partidas recentes.</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">Jogo</TableHead>

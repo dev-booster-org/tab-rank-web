@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import { Crown, LogOut, User } from 'lucide-react'
+import { Crown, File, LogOut, User } from 'lucide-react'
 import { Outlet, useNavigate } from 'react-router'
 
 import {
@@ -66,6 +66,14 @@ export function AuthLayout() {
               >
                 <User />
                 Perfil
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  navigate(`/auth/change-log`)
+                }}
+              >
+                <File />
+                ChangeLog
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-2"

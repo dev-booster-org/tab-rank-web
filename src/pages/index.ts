@@ -1,3 +1,4 @@
+export * from './change-log'
 export * from './create-game'
 export * from './create-lobby'
 export * from './error'

@@ -11,6 +11,7 @@ import {
   CreateGame,
   Lobby,
   Profile,
+  ChangeLog,
 } from '@/pages'
 
 import { AuthLayout } from '@/layouts/auth-layout'
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile/:userId',
         element: <Profile />,
+      },
+      {
+        path: 'change-log',
+        element: <ChangeLog />,
       },
     ],
   },
