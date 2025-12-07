@@ -4,13 +4,14 @@ import {
   Game,
   Home,
   CreateLobby,
-  NotFound,
+  Error,
   SignIn,
   SignUp,
   JoinLobby,
   CreateGame,
   Lobby,
   Profile,
+  ChangeLog,
 } from '@/pages'
 
 import { AuthLayout } from '@/layouts/auth-layout'
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
 
       return null
     },
-    errorElement: <NotFound />,
+    errorElement: <Error />,
   },
   {
     path: '/sign-up',
@@ -53,6 +54,7 @@ export const router = createBrowserRouter([
 
       return null
     },
+    errorElement: <Error />,
     children: [
       {
         path: 'home',
@@ -81,6 +83,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile/:userId',
         element: <Profile />,
+      },
+      {
+        path: 'change-log',
+        element: <ChangeLog />,
       },
     ],
   },

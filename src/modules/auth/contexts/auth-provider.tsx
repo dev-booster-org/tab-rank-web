@@ -54,6 +54,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       try {
         const { data } = await signInService(params)
 
+        console.log('---------- DEBUG ----------')
+        console.log(data)
+        console.log('---------- DEBUG ----------')
+
         localStorage.setItem('tabRank:accessToken', data.accessToken)
         localStorage.setItem('tabRank:user', JSON.stringify(data.user))
 

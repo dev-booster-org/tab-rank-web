@@ -12,7 +12,18 @@ type SocketContextSchema = {
 const SocketContext = createContext<SocketContextSchema | null>(null)
 
 export function SocketProvider({ children }: SocketProviderProps) {
-  const socket = useMemo(() => io(import.meta.env.VITE_API_URL), [])
+  const socket = useMemo(
+    () =>
+      io(import.meta.env.VITE_API_URL, {
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        randomizationFactor: 0.5,
+        timeout: 20000,
+      }),
+    [],
+  )
 
   return (
     <SocketContext.Provider value={{ socket }}>

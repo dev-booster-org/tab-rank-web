@@ -18,9 +18,13 @@ export function createMatchService(params: CreateMatchProps) {
   })
 }
 
-export function getMatchesByUserIdService(params: GetMatchesByUserIdProps) {
+export function getMatchesByUserIdService({
+  userId,
+  ...rest
+}: GetMatchesByUserIdProps) {
   return request<GetMatchesByUserIdResponse>({
-    url: `/match/${params.userId}/get-by-user-id`,
+    url: `/match/${userId}/get-by-user-id`,
     method: 'get',
+    params: { ...rest },
   })
 }

@@ -2,6 +2,10 @@ import { useCallback } from 'react'
 import z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
+import { X } from 'lucide-react'
+
+import { useCreateMatch } from '@/modules/match/hooks/use-create-match'
 
 import type { Lobby } from '@/modules/lobby/types'
 import type { User } from '@/modules/user/types'
@@ -28,9 +32,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components'
-import { useCreateMatch } from '@/modules/match/hooks/use-create-match'
-import { toast } from 'sonner'
-import { X } from 'lucide-react'
 
 const formSchema = z.object({
   duration: z.string().min(1, 'Duração é obrigatória'),
@@ -60,6 +61,7 @@ export function CreateMatchDialog({
   })
 
   const {
+    loading: createMatchLoading,
     handlers: { handleCreateMatch },
   } = useCreateMatch()
 
@@ -155,7 +157,11 @@ export function CreateMatchDialog({
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={createMatchLoading}
+          >
             Registrar Partida
           </Button>
         </form>
