@@ -4,7 +4,7 @@ import {
   Game,
   Home,
   CreateLobby,
-  NotFound,
+  Error,
   SignIn,
   SignUp,
   JoinLobby,
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
 
       return null
     },
-    errorElement: <NotFound />,
+    errorElement: <Error />,
   },
   {
     path: '/sign-up',
@@ -53,6 +53,7 @@ export const router = createBrowserRouter([
 
       return null
     },
+    errorElement: <Error />,
     children: [
       {
         path: 'home',
